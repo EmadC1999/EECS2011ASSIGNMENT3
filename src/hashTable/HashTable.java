@@ -3,14 +3,23 @@ import java.util.*;
 
 public class HashTable {
 	LinkedList<Entry>[] hashTable = new LinkedList[13];
-	int size = 0;
+	
 	public HashTable(){
 		
 	}
-	public void insert(Key k, Value v) {
+	
+	public int hashMethod(String k) {
+		int hashcode = 0;
+		for(int i = 0; i < k.length(); i++) {
+		hashcode = hashcode + (int) k.charAt(i);
+		}
+		return (hashcode % 13);
+	}
+	
+	public void insert(String k, int v) {
 		//hash method returns one of 13 buckets where 
 		//the key will be stored based on the corresponding hash code
-		int index = k.hashMethod();
+		int index = hashMethod(k);
 		
 		//If the bucket is empty, instantiate a linked list to store new entries
 		if(hashTable[index] == null) {
@@ -27,15 +36,15 @@ public class HashTable {
 					return;
 				}
 			}
-			hashTable[index].add(new Entry(k,v));
+			hashTable[index].addFirst(new Entry(k,v));
 			return;
 		}
 	}
 	
 	//Method to find value that corresponds to a given key
-	public Value searchValue(Key k) {
+	public java.lang.Integer searchValue(String k) {
 		//index tells us which bucket to search in 
-		int index = k.hashMethod();
+		int index = hashMethod(k);
 		
 		//if the bucket is not instantiated, return null
 		if(hashTable[index] == null) {
@@ -54,16 +63,16 @@ public class HashTable {
 		return null;
 	}
 	
-	public void delete(Key k) {
+	public void delete(String k) {
 		//If the key is non existent, return null
 		if(k == null) {
 			return;
 		}
 		// find the bucket corresponding to the key string by hashing the
 		// given key
-		int index = k.hashMethod();
+		int index = hashMethod(k);
 		
-		//If the hashtable array has not had the linked list instantiated as of yet
+		//If the hash table array has not had the linked list instantiated as of yet
 		//return null
 		if(hashTable[index] == null) {
 			return;
@@ -89,11 +98,12 @@ public class HashTable {
 		}
 		else {
 			//remove the Entry "Delete" from the node in the linked list
-			hashTable[index].remove(delete);		}
+			hashTable[index].remove(delete);		
+			}
 	}
 	
 	//Searches to check if a given key is present in the hash table
-	public boolean keyPresent(Key k) {
+	public boolean keyPresent(String k) {
 		//if the key is null, break
 		if(k == null) {
 			return false;
@@ -101,7 +111,7 @@ public class HashTable {
 		
 		// find the bucket corresponding to the key string by hashing the
 		// given key
-		int index = k.hashMethod();
+		int index = hashMethod(k);
 		//if hash Table at index has not been instantiated, return false
 		if(hashTable[index] == null) {
 			return false;
@@ -115,6 +125,20 @@ public class HashTable {
 			}
 		}
 		return false;
+	}
+	
+	public void dumpMap()
+	{
+		for (int i = 0; i < 13; ++i)
+		{
+			if ( hashTable[i] != null)
+			{
+				for (Entry entry : hashTable[i])
+				{
+					System.out.println(entry.key + ": " + entry.value + ", Hashcode: " + hashMethod(entry.key) + "\n");
+				}
+			}	
+		}
 	}
 	
 }
