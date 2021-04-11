@@ -1,8 +1,8 @@
 package hashTable;
 import java.util.*;
 
-public class HashTable {
-	LinkedList<Entry>[] hashTable = new LinkedList[13];
+public class HashTable <T> {
+	LinkedList<Entry<T>>[] hashTable = new LinkedList[13];
 	
 	public HashTable(){
 		
@@ -16,7 +16,7 @@ public class HashTable {
 		return (hashcode % 13);
 	}
 	
-	public void insert(String k, int v) {
+	public void insert(String k, T v) {
 		//hash method returns one of 13 buckets where 
 		//the key will be stored based on the corresponding hash code
 		int index = hashMethod(k);
@@ -42,7 +42,7 @@ public class HashTable {
 	}
 	
 	//Method to find value that corresponds to a given key
-	public java.lang.Integer searchValue(String k) {
+	public T searchValue(String k) {
 		//index tells us which bucket to search in 
 		int index = hashMethod(k);
 		
@@ -55,7 +55,7 @@ public class HashTable {
 		// corresponding value v
 		for(Entry entry : hashTable[index]) {
 			if(entry.key.equals(k)) {
-				return entry.value;
+				return (T) entry.value;
 			}
 		}
 		// in the situation it is not found, return null

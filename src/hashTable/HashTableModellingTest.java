@@ -2,6 +2,8 @@ package hashTable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 
 class HashTableModellingTest {
@@ -11,7 +13,7 @@ class HashTableModellingTest {
 	 */
 	@Test
 	void entrySearching() {
-		HashTable map = new HashTable();
+		HashTable<Integer> map= new HashTable<Integer>();
 		
 		//Tests the functionality of the keyPresent and searchValue methods
 		map.insert("testKey", 25);
@@ -24,7 +26,12 @@ class HashTableModellingTest {
 		
 		map.insert("KMs_Driven", 100000);
 		assertTrue(map.keyPresent("KMs_Driven"));
-		assertEquals(map.searchValue("KMs_Driven"), 100000);		
+		assertEquals(map.searchValue("KMs_Driven"), 100000);
+		
+		//Tests for Other Objects
+		HashTable<Date> map2 = new HashTable<Date>();
+		map2.insert("Date", new Date());
+		assertTrue(map2.keyPresent("Date"));
 		
 	}
 	
@@ -49,7 +56,7 @@ class HashTableModellingTest {
 		
 	}
 	
-	/* Tests if the HashTable can handle the over-writing of entry values with the same key */
+	/* Tests if the HashTable can handle the over-writing of incorrect entry values with the same key */
 	@Test
 	void doubleEntry() {
 		HashTable map = new HashTable();

@@ -1,9 +1,9 @@
 package hashTable;
 
-public class Entry {
+public class Entry <T> {
 	public String key;
-	public int value;
-	public Entry(String k, int v) {
+	public T value;
+	public Entry(String k, T v) {
 		key = k;
 		
 		value = v;
